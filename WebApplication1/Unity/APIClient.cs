@@ -29,9 +29,9 @@ public class APIClient : MonoBehaviour
         else
         {
             string json = request.downloadHandler.text;
-            Debug.Log("Received JSON: " + json); // µğ¹ö±×¿ë
+            Debug.Log("Received JSON: " + json); // ë””ë²„ê·¸ìš©
 
-            // JSON ÆÄ½Ì
+            // JSON íŒŒì‹±
             List<GameData> gameDataList = JsonConvert.DeserializeObject<List<GameData>>(json);
 
             DisplayGameData(gameDataList);
@@ -46,7 +46,7 @@ public class APIClient : MonoBehaviour
             return;
         }
 
-        gameDataText.text = ""; // ±âÁ¸ ÅØ½ºÆ® ÃÊ±âÈ­
+        gameDataText.text = ""; // ê¸°ì¡´ í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
 
         foreach (var data in gameDataList)
         {
