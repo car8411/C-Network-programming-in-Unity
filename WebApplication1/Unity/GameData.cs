@@ -3,7 +3,7 @@ namespace MyProject.Models
     [System.Serializable]
     public class GameData
     {
-        public IdWrapper Id; // id¸¦ º¹ÇÕ °´Ã¼·Î ¸ÅÇÎ
+        public IdWrapper Id; // idÂ¸Â¦ ÂºÂ¹Ã‡Ã• Â°Â´ÃƒÂ¼Â·ÃŽ Â¸Ã…Ã‡ÃŽ
         public string Name;
         public int Score;
     }
