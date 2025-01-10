@@ -5,47 +5,47 @@ using WebApplication1.Models;
 
 public class SqlService
 {
-    private readonly GameDbContext _dbContext;
+    private readonly GameDbContext _context; // 필드 이름
 
-    public SqlService(GameDbContext dbContext)
+    public SqlService(GameDbContext context)
     {
-        _dbContext = dbContext;
+        _context = context; // 생성자에서 필드 초기화
     }
 
     public async Task<List<PlayerData>> GetAllPlayerDataAsync()
     {
-        return await _dbContext.Players.ToListAsync();
+        return await _context.Players.ToListAsync(); // _context로 수정
     }
 
     public async Task<PlayerData> GetPlayerDataByIdAsync(int playerId)
     {
-        return await _dbContext.Players.FindAsync(playerId);
+        return await _context.Players.FindAsync(playerId); // _context로 수정
     }
 
     public async Task CreatePlayerDataAsync(PlayerData playerData)
     {
-        _dbContext.Players.Add(playerData);
-        await _dbContext.SaveChangesAsync();
+        _context.Players.Add(playerData); // _context로 수정
+        await _context.SaveChangesAsync();
     }
 
     public async Task UpdatePlayerDataAsync(int playerId, PlayerData updatedPlayerData)
     {
-        var player = await _dbContext.Players.FindAsync(playerId);
+        var player = await _context.Players.FindAsync(playerId); // _context로 수정
         if (player != null)
         {
             player.PlayerName = updatedPlayerData.PlayerName;
             player.TotalScore = updatedPlayerData.TotalScore;
-            await _dbContext.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 
     public async Task DeletePlayerDataAsync(int playerId)
     {
-        var player = await _dbContext.Players.FindAsync(playerId);
+        var player = await _context.Players.FindAsync(playerId); // _context로 수정
         if (player != null)
         {
-            _dbContext.Players.Remove(player);
-            await _dbContext.SaveChangesAsync();
+            _context.Players.Remove(player);
+            await _context.SaveChangesAsync();
         }
     }
 }
