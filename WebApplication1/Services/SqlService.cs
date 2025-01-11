@@ -1,51 +1,51 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class SqlService
 {
-    private readonly GameDbContext _context; // 필드 이름
+    private readonly GameDbContext _dbContext;
 
-    public SqlService(GameDbContext context)
+    public SqlService(GameDbContext dbContext)
     {
-        _context = context; // 생성자에서 필드 초기화
+        _dbContext = dbContext;
     }
 
     public async Task<List<PlayerData>> GetAllPlayerDataAsync()
     {
-        return await _context.Players.ToListAsync(); // _context로 수정
+        return await _dbContext.Players.ToListAsync();
     }
 
-    public async Task<PlayerData> GetPlayerDataByIdAsync(int playerId)
+    public async Task<PlayerData> GetPlayerDataByIdAsync(int id)
     {
-        return await _context.Players.FindAsync(playerId); // _context로 수정
+        return await _dbContext.Players.FindAsync(id);
     }
 
     public async Task CreatePlayerDataAsync(PlayerData playerData)
     {
-        _context.Players.Add(playerData); // _context로 수정
-        await _context.SaveChangesAsync();
+        await _dbContext.Players.AddAsync(playerData); // AddAsync로 비동기 추가
+        await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdatePlayerDataAsync(int playerId, PlayerData updatedPlayerData)
+    public async Task UpdatePlayerDataAsync(int id, PlayerData updatedPlayer)
     {
-        var player = await _context.Players.FindAsync(playerId); // _context로 수정
+        var player = await _dbContext.Players.FindAsync(id);
         if (player != null)
         {
-            player.PlayerName = updatedPlayerData.PlayerName;
-            player.TotalScore = updatedPlayerData.TotalScore;
-            await _context.SaveChangesAsync();
+            player.PlayerName = updatedPlayer.PlayerName;
+            player.TotalScore = updatedPlayer.TotalScore;
+            await _dbContext.SaveChangesAsync();
         }
     }
 
-    public async Task DeletePlayerDataAsync(int playerId)
+    public async Task DeletePlayerDataAsync(int id)
     {
-        var player = await _context.Players.FindAsync(playerId); // _context로 수정
+        var player = await _dbContext.Players.FindAsync(id);
         if (player != null)
         {
-            _context.Players.Remove(player);
-            await _context.SaveChangesAsync();
+            _dbContext.Players.Remove(player);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -8,7 +8,8 @@ builder.Services.AddControllers();
 
 // GameDbContext 등록 (SQL Server 연결 문자열 설정)
 builder.Services.AddDbContext<GameDbContext>(options =>
-    options.UseSqlServer("Server=localhost;Database=GameDatabase;User Id=car84;Password=dkahsen5890!!;"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // MongoService 등록
 builder.Services.AddScoped<MongoService>();
@@ -38,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Game API V1");
-        c.RoutePrefix = string.Empty; // Swagger UI 기본 경로 설정
+        c.RoutePrefix = "swagger"; // Swagger UI 기본 경로 설정
     });
 }
 
